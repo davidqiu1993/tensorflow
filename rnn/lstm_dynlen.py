@@ -269,7 +269,7 @@ class Learner(object):
     metrics_test = self.evaluate(X_test, Y_test)
 
     # log
-    print('test: test_err=%.2f%%' % (metrics_test['error']))
+    print('test: test_err=%.2f%%' % (metrics_test['error'] * 100))
 
 
 def main():
