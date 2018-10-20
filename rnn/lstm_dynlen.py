@@ -232,21 +232,32 @@ class Learner(object):
 
 
   def train(self, X_train, Y_train, X_valid=None, Y_valid=None):
-    epochs = 10
+    epochs = 50
     batch_size = self.conf['batch_size']
 
     N_batches = len(X_train) // batch_size
+    indices_train = [ i for i in range(len(X_train)) ]
 
     # train for multiple epochs
     for ep in range(epochs):
       # shuffle training samples
-      # todo...
+      random.shuffle(indices_train)
 
       # train through all training samples
       for i_batch in tqdm(range(N_batches)):
+        # determine sample indices for the training batch
         ptr_lower = i_batch * batch_size
         ptr_upper = ptr_lower + batch_size
-        X_batch, Y_batch = X_train[ptr_lower:ptr_upper], Y_train[ptr_lower:ptr_upper]
+        indices_batch = indices_train[ptr_lower:ptr_upper]
+
+        # construct training batch
+        X_batch = []
+        Y_batch = []
+        for i_sample in indices_batch:
+          X_batch.append(X_train[i_sample])
+          Y_batch.append(Y_train[i_sample])
+
+        # train once
         self._train_once(X_batch, Y_batch)
 
       # evaluate
