@@ -97,7 +97,7 @@ def main():
   print('training..')
   batch_size = 1000
   no_of_batches = int(len(train_X) / batch_size)
-  epoch = 500
+  epoch = 150
   for i in range(epoch):
     ptr = 0
     for j in range(no_of_batches):
