@@ -15,6 +15,10 @@ def f_tf(x):
     return tf.math.sin(x)
 
 
+def f_power(x):
+    return x ** 1.5
+
+
 def main():
     x = tf.Variable(1.0)
 
@@ -42,6 +46,13 @@ def main():
         print('y_tf = %s' % (str(y_tf)))
     except Exception as e:
         print('tf is not supported.')
+
+    try:
+        y_power = f_power(x)
+        print('power is supported.')
+        print('y_power = %s' % (str(y_power)))
+    except Exception as e:
+        print('power is not supported.')
 
 
 if __name__ == '__main__':
