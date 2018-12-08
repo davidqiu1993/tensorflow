@@ -8,11 +8,11 @@ def build_computation_graph(T_max=30):
 
   Y = tf.Variable(tf.zeros([T_max, 1], tf.float32))
 
-  c = lambda i, T, X, Y, J: i < T
-  b = lambda i, T, X, Y, J: (i + 1, T, X, Y, J + tf.reduce_sum((X[i] - Y[i]) * (X[i] - Y[i])))
-  out = tf.while_loop(c, b, (tf.convert_to_tensor(0, tf.int32), T, X, Y, tf.convert_to_tensor(0.0, tf.float32)))
+  c = lambda i, J: i < T
+  b = lambda i, J: (i + 1, J + tf.reduce_sum((X[i] - Y[i]) * (X[i] - Y[i])))
+  out = tf.while_loop(c, b, (tf.convert_to_tensor(0, tf.int32), tf.convert_to_tensor(0.0, tf.float32)))
 
-  J = out[4]
+  J = out[1]
 
   optimizer = tf.train.AdamOptimizer()
   op_min = optimizer.minimize(J)
